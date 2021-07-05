@@ -20,8 +20,14 @@
         ></v-text-field>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="800px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+          <template v-slot:activator="{ attrs }">
+            <v-btn
+              color="primary"
+              dark
+              class="mb-2"
+              v-bind="attrs"
+              @click="handleCadastrarAluno"
+            >
               Cadastrar Aluno
             </v-btn>
           </template>
@@ -86,10 +92,14 @@
       </v-toolbar>
     </template>
     <template v-slot:[`item.actions`]="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">
+      <v-icon
+        small
+        class="mr-2"
+        @click="$router.push(`/alunos/update/${item.ra}`)"
+      >
         mdi-pencil
       </v-icon>
-      <v-icon small @click="deleteItem(item)">
+      <v-icon small @click="$router.push(`/alunos/delete/${item.ra}`)">
         mdi-delete
       </v-icon>
     </template>
@@ -106,7 +116,7 @@ export default {
   props: ["headers", "alunos"],
   data() {
     return {
-      search: '',
+      search: "",
       dialog: false,
       dialogDelete: false,
       desserts: [],
@@ -140,6 +150,10 @@ export default {
   },
 
   methods: {
+    handleCadastrarAluno() {
+      this.$router.push("/alunos/create");
+    },
+
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);

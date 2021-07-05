@@ -48,24 +48,24 @@
 export default {
   data() {
     return {
-      title: 'EdTech',
+      title: "EdTech",
       drawer: true,
       clipped: false,
       fixed: false,
       miniVariant: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Alunos',
-          to: '/',
-        },
-      ],
-    }
+          icon: "mdi-apps",
+          title: "Alunos",
+          to: "/"
+        }
+      ]
+    };
   },
   computed: {
     chevronType() {
-      return `mdi-chevron-${this.miniVariant ? 'right' : 'left'}`
-    },
-  },
-}
+      return `mdi-chevron-${this.miniVariant ? "right" : "left"}`;
+    }
+  }
+};
 </script>

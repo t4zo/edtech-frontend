@@ -33,9 +33,7 @@ export default {
   computed: {
     alunos() {
       const alunos = this.$store.getters["alunos/alunos"];
-      return alunos.map(aluno => {
-        return { ra: aluno.ra, nome: aluno.nome, cpf: aluno.cpf };
-      });
+      return alunos.map(aluno => ({ ra: aluno.ra, nome: aluno.nome, cpf: aluno.cpf }));
     }
   }
 };
