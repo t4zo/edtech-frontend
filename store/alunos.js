@@ -13,6 +13,11 @@ export const mutations = {
   addAluno(state, payload) {
     state.alunos.push(payload);
   },
+  updateAluno(state, payload) {
+    const aluno = state.alunos.filter(aluno => aluno.ra === payload);
+    aluno.nome = payload.nome;
+    aluno.email = payload.email;
+  },
   deleteAluno(state, payload) {
     const aluno = state.alunos.filter(aluno => aluno.ra === payload);
     state.alunos.splice(state.alunos.indexOf(aluno), 1);
@@ -35,6 +40,16 @@ export const actions = {
       const { data } = await this.$axios.post("/v1/alunos", payload);
       data.cpf = addCpfMask(data.cpf);
       context.commit("addAluno", data);
+      this.$router.push("/");
+    } catch (error) {
+      return true;
+    }
+  },
+  async updateAluno(context, payload) {
+    try {
+      const { data } = await this.$axios.put(`/v1/alunos/${payload.ra}`, payload);
+      
+      context.commit("updateAluno", data);
       this.$router.push("/");
     } catch (error) {
       return true;

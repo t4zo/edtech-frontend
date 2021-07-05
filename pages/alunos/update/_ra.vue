@@ -4,7 +4,7 @@
       <v-form v-model="valid" @submit.prevent="handleFormSubmit">
         <v-card elevation="2" outlined>
           <v-card-subtitle class="pa-8">
-            <h1>Cadastrar Aluno</h1>
+            <h1>Atualizar Aluno</h1>
           </v-card-subtitle>
           <v-card-text>
             <v-container>
@@ -15,6 +15,7 @@
                     :rules="rules.ra"
                     :counter="20"
                     label="Registro Acadêmico"
+                    disabled
                     required
                   ></v-text-field>
                   <p v-if="raCadastrado">Registro Acadêmico já cadastrado</p>
@@ -46,6 +47,7 @@
                     :rules="rules.cpf"
                     :counter="14"
                     label="CPF"
+                    disabled
                     required
                   ></v-text-field>
                 </v-col>
@@ -68,6 +70,15 @@
 
 <script>
 export default {
+  async asyncData({ route, store }) {
+    const { ra } = route.params;
+    const alunoObserver = store.getters["alunos/getAlunoByRA"](ra);
+    const aluno = Object.assign({}, alunoObserver);
+
+    return {
+      aluno
+    };
+  },
   data() {
     return {
       valid: false,
@@ -104,14 +115,7 @@ export default {
   },
   methods: {
     async handleFormSubmit() {
-      this.raCadastrado = false;
-      const raCadastrado = await this.$store.dispatch(
-        "alunos/addAluno",
-        this.aluno
-      );
-      if (raCadastrado) {
-        this.raCadastrado = true;
-      }
+      await this.$store.dispatch("alunos/updateAluno", this.aluno);
     }
   }
 };
