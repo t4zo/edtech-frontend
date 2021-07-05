@@ -7,6 +7,7 @@
       fixed
       app
     >
+      <img src="~assets/images/grupo_a.png" alt="Grupo A" class="d-flex ma-auto" />
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
