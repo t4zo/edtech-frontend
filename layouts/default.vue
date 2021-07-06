@@ -7,6 +7,11 @@
       fixed
       app
     >
+      <img
+        src="~assets/images/grupo_a.png"
+        alt="Grupo A"
+        class="d-flex ma-auto"
+      />
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -36,9 +41,19 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
-    <v-main>
+    <v-main class="mt-12">
+      <Nuxt />
       <v-container>
-        <Nuxt />
+        <v-snackbar v-model="snackbar" :timeout="4000">
+          <span v-if="snackbarMessage">
+            {{ snackbarMessage }}
+          </span>
+          <template v-slot:action="{ attrs }">
+            <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+              Close
+            </v-btn>
+          </template>
+        </v-snackbar>
       </v-container>
     </v-main>
   </v-app>
@@ -48,24 +63,32 @@
 export default {
   data() {
     return {
-      title: 'EdTech',
+      title: "EdTech",
       drawer: true,
       clipped: false,
       fixed: false,
       miniVariant: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Alunos',
-          to: '/',
-        },
+          icon: "mdi-apps",
+          title: "Alunos",
+          to: "/"
+        }
       ],
-    }
+      snackbar: false,
+      snackbarMessage: ""
+    };
+  },
+  created() {
+    this.$nuxt.$on("showSnackbar", $event => {
+      this.snackbar = true;
+      this.snackbarMessage = $event;
+    });
   },
   computed: {
     chevronType() {
-      return `mdi-chevron-${this.miniVariant ? 'right' : 'left'}`
-    },
-  },
-}
+      return `mdi-chevron-${this.miniVariant ? "right" : "left"}`;
+    }
+  }
+};
 </script>
