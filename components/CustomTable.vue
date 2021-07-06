@@ -121,7 +121,7 @@ export default {
         ra: "",
         nome: "",
         cpf: ""
-      },
+      }
     };
   },
 
@@ -152,7 +152,17 @@ export default {
     },
 
     async deleteItemConfirm() {
-      await this.$store.dispatch("alunos/deleteAluno", this.editedItem.ra);
+      const succeeded = await this.$store.dispatch(
+        "alunos/deleteAluno",
+        this.editedItem.ra
+      );
+
+      if (!succeeded) {
+        this.$nuxt.$emit("showSnackbar", "Erro ao remover o aluno");
+        return;
+      }
+
+      this.$nuxt.$emit("showSnackbar", "Aluno removido com sucesso");
       this.closeDelete();
     },
 
@@ -170,7 +180,7 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
-    },
+    }
   }
 };
 </script>

@@ -41,18 +41,23 @@ export const actions = {
       data.cpf = addCpfMask(data.cpf);
       context.commit("addAluno", data);
       this.$router.push("/");
-    } catch (error) {
       return true;
+    } catch (error) {
+      return false;
     }
   },
   async updateAluno(context, payload) {
     try {
-      const { data } = await this.$axios.put(`/v1/alunos/${payload.ra}`, payload);
-      
+      const { data } = await this.$axios.put(
+        `/v1/alunos/${payload.ra}`,
+        payload
+      );
+
       context.commit("updateAluno", data);
       this.$router.push("/");
-    } catch (error) {
       return true;
+    } catch (error) {
+      return false;
     }
   },
   async deleteAluno(context, payload) {
@@ -60,8 +65,9 @@ export const actions = {
       const { data } = await this.$axios.delete(`/v1/alunos/${payload}`);
       context.commit("deleteAluno", data);
       this.$router.push("/");
-    } catch (error) {
       return true;
+    } catch (error) {
+      return false;
     }
   }
 };

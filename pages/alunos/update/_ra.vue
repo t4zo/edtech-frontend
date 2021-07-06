@@ -115,7 +115,13 @@ export default {
   },
   methods: {
     async handleFormSubmit() {
-      await this.$store.dispatch("alunos/updateAluno", this.aluno);
+      const succeeded = await this.$store.dispatch("alunos/updateAluno", this.aluno);
+      if(!succeeded) {
+        this.$nuxt.$emit("showSnackbar", "Erro ao atualizar aluno");
+        return;
+      }
+
+      this.$nuxt.$emit("showSnackbar", "Aluno atualizado com sucesso");
     }
   }
 };

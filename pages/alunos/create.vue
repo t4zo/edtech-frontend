@@ -105,13 +105,15 @@ export default {
   methods: {
     async handleFormSubmit() {
       this.raCadastrado = false;
-      const raCadastrado = await this.$store.dispatch(
-        "alunos/addAluno",
-        this.aluno
-      );
-      if (raCadastrado) {
+      const succeeded = await this.$store.dispatch("alunos/addAluno", this.aluno);
+
+      if (!succeeded) {
         this.raCadastrado = true;
+        this.$nuxt.$emit("showSnackbar", "Erro ao criar aluno");
+        return;
       }
+
+      this.$nuxt.$emit("showSnackbar", "Aluno criado com sucesso");
     }
   }
 };
