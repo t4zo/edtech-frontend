@@ -41,11 +41,8 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
-    <v-main>
+    <v-main class="mt-12">
       <Nuxt />
-      <v-btn dark @click="snackbar = true">
-        Open Snackbar
-      </v-btn>
       <v-container>
         <v-snackbar v-model="snackbar" :timeout="4000">
           <span v-if="snackbarMessage">

@@ -47,7 +47,9 @@
                     :counter="14"
                     label="CPF"
                     required
-                  ></v-text-field>
+                    v-mask="['###.###.###-##']"
+                  >
+                  </v-text-field>
                 </v-col>
               </v-row>
             </v-container>
@@ -67,7 +69,10 @@
 </template>
 
 <script>
+import { mask } from "vue-the-mask";
+
 export default {
+  directives: { mask },
   data() {
     return {
       valid: false,
@@ -105,7 +110,10 @@ export default {
   methods: {
     async handleFormSubmit() {
       this.raCadastrado = false;
-      const succeeded = await this.$store.dispatch("alunos/addAluno", this.aluno);
+      const succeeded = await this.$store.dispatch(
+        "alunos/addAluno",
+        this.aluno
+      );
 
       if (!succeeded) {
         this.raCadastrado = true;
